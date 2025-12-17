@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "57e6193e-e4f5-46b2-acd1-854faa7601ce",
+		"name": "Cinemax API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33822259",
+		"_collection_link": "https://orugas-4020.postman.co/workspace/96471ac3-c9ba-4f35-a33e-c21f04776760/collection/33822259-57e6193e-e4f5-46b2-acd1-854faa7601ce?action=share&source=collection_link&creator=33822259"
+	},
+	"item": [
+		{
+			"name": "RF-01 Registro de Usuario",
+			"item": [
+				{
+					"name": "RF-01-CP02: Registro con correo duplicado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Correo duplicado detectado\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 409, 500]);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"first_name\": \"Javiera\",\r\n  \"last_name\": \"Soliz\",\r\n  \"email\": \"juja@gmail.com\",\r\n  \"password\": \"javierasiu\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://back-sd-cine.onrender.com/api/users",
+							"protocol": "https",
+							"host": [
+								"back-sd-cine",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RF-01-CP01 Registro exitoso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Código de estado 201 - Usuario creado\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Respuesta contiene ID de usuario\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property(\"id\");\r",
+									"});\r",
+									"\r",
+									"const requestBody = pm.request.body.raw\r",
+									"    ? JSON.parse(pm.request.body.raw)\r",
+									"    : {};\r",
+									"\r",
+									"pm.test(\"Email retornado coincide con el enviado\", function () {\r",
+									"    pm.expect(pm.response.json().email).to.eql(requestBody.email);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"first_name\": \"Javier\",\r\n  \"last_name\": \"Juvenx\",\r\n  \"email\": \"jujax@gmail.com\",\r\n  \"password\": \"julixo321\"\r\n}\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://back-sd-cine.onrender.com/api/users",
+							"protocol": "https",
+							"host": [
+								"back-sd-cine",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
